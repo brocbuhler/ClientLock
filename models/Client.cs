@@ -3,16 +3,16 @@ namespace ClientLock.models;
 public class Client
 {
     public int Id { get; set; }
-    [required]
+    [Required]
     public string FirstName { get; set; }
-    [required]
+    [Required]
     public string LastName { get; set; }
-    [required]
+    [Required]
     public int AgentId { get; set; }
-    [required]
+    [Required]
     public int UserId { get; set; }
-    [required]
+    [Required]
     public string Phone { get; set; }
-    [required]
+    [Required]
     public string Email { get; set; }
 }

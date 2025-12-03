@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-namespace ClientLock.models;
-public class Agent
+namespace ClientLock.models.DTO;
+public class AgentDTO
 {
     public int Id { get; set; }
     [Required]

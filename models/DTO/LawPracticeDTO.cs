@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-namespace ClientLock.models;
-public class LawPractice
+namespace ClientLock.models.DTO;
+public class LawPracticeDTO
 {
     public int Id { get; set; }
     [Required]
