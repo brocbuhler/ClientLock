@@ -10,7 +10,7 @@ public class Client
     [Required]
     public int AgentId { get; set; }
     [Required]
-    public int UserId { get; set; }
+    public int UserProfileId { get; set; }
     [Required]
     public string Phone { get; set; }
     [Required]

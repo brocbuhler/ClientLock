@@ -11,7 +11,7 @@ public class ClientDTO
     public int AgentId { get; set; }
     public AgentDTO Agent { get; set; }
     [Required]
-    public int UserId { get; set; }
+    public int UserProfileId { get; set; }
     [Required]
     public string Phone { get; set; }
     [Required]
