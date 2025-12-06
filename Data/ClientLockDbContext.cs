@@ -39,7 +39,7 @@ public class ClientLockDbContext : IdentityDbContext<IdentityUser>
                 UserName = "TomRLaw",
                 Email = "tom@clientlock.com",
                 PasswordHash = new PasswordHasher<IdentityUser>()
-                    .HashPassword(null, _configuration["AdminPassword"])
+                    .HashPassword(null, _configuration["AdminPassword1"])
             },
             new IdentityUser
             {
@@ -47,7 +47,7 @@ public class ClientLockDbContext : IdentityDbContext<IdentityUser>
                 UserName = "SarahLaw",
                 Email = "sarah@clientlock.com",
                 PasswordHash = new PasswordHasher<IdentityUser>()
-                    .HashPassword(null, _configuration["AdminPassword"])
+                    .HashPassword(null, _configuration["AdminPassword2"])
             },
             new IdentityUser
             {
@@ -55,7 +55,7 @@ public class ClientLockDbContext : IdentityDbContext<IdentityUser>
                 UserName = "MikeLaw",
                 Email = "mike@clientlock.com",
                 PasswordHash = new PasswordHasher<IdentityUser>()
-                    .HashPassword(null, _configuration["AdminPassword"])
+                    .HashPassword(null, _configuration["AdminPassword3"])
             },
             new IdentityUser
             {
@@ -63,7 +63,7 @@ public class ClientLockDbContext : IdentityDbContext<IdentityUser>
                 UserName = "GeroldG",
                 Email = "gerold@gmail.com",
                 PasswordHash = new PasswordHasher<IdentityUser>()
-                    .HashPassword(null, _configuration["ClientPassword"])
+                    .HashPassword(null, _configuration["ClientPassword1"])
             },
             new IdentityUser
             {
@@ -71,7 +71,7 @@ public class ClientLockDbContext : IdentityDbContext<IdentityUser>
                 UserName = "AmandaP",
                 Email = "amanda@gmail.com",
                 PasswordHash = new PasswordHasher<IdentityUser>()
-                    .HashPassword(null, _configuration["ClientPassword"])
+                    .HashPassword(null, _configuration["ClientPassword2"])
             }
         );
 
