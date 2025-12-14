@@ -4,9 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using ClientLock.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//github issue comment so I can resubmit a PR
 // Add services to the container.
-
 builder.Services.AddControllers().AddJsonOptions(opts =>
 {
     opts.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
@@ -37,24 +36,25 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 builder.Services.AddIdentityCore<IdentityUser>(config =>
-            {
-                //for demonstration only - change these for other projects
-                config.Password.RequireDigit = false;
-                config.Password.RequiredLength = 8;
-                config.Password.RequireLowercase = false;
-                config.Password.RequireNonAlphanumeric = false;
-                config.Password.RequireUppercase = false;
-                config.User.RequireUniqueEmail = true;
-            })
-    .AddRoles<IdentityRole>()  //add the role service.  
-    .AddEntityFrameworkStores<ClientLockDbContext>();
+        {
+            //for demonstration only - change these for other projects
+            config.Password.RequireDigit = false;
+            config.Password.RequiredLength = 8;
+            config.Password.RequireLowercase = false;
+            config.Password.RequireNonAlphanumeric = false;
+            config.Password.RequireUppercase = false;
+
+            // requires each user has a unique email address
+            config.User.RequireUniqueEmail = true;
+        })
+.AddRoles<IdentityRole>()  //add the role service.  
+.AddEntityFrameworkStores<ClientLockDbContext>();
 
 // allows passing datetimes without time zone data 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // allows our api endpoints to access the database through Entity Framework Core
 builder.Services.AddNpgsql<ClientLockDbContext>(builder.Configuration["ClientLockDbConnectionString"]);
-
 
 var app = builder.Build();
 
@@ -66,7 +66,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-// these two calls are required to add auth to the pipeline for a request
+
 app.UseAuthentication();
 app.UseAuthorization();
 

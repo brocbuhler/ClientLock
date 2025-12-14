@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ClientLock.Migrations
 {
     [DbContext(typeof(ClientLockDbContext))]
-    [Migration("20251206170351_InitialCreate")]
+    [Migration("20251214150328_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,52 +24,6 @@ namespace ClientLock.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("ClientLock.Models.UserProfile", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("IdentityUserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdentityUserId");
-
-                    b.ToTable("UserProfiles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IdentityUserId = "A-001"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IdentityUserId = "A-002"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IdentityUserId = "A-003"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            IdentityUserId = "C-001"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            IdentityUserId = "C-002"
-                        });
-                });
 
             modelBuilder.Entity("ClientLock.models.Agent", b =>
                 {
@@ -340,6 +294,52 @@ namespace ClientLock.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ClientLock.models.UserProfile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("IdentityUserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdentityUserId");
+
+                    b.ToTable("UserProfiles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IdentityUserId = "A-001"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IdentityUserId = "A-002"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IdentityUserId = "A-003"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            IdentityUserId = "C-001"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            IdentityUserId = "C-002"
+                        });
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -369,13 +369,13 @@ namespace ClientLock.Migrations
                         new
                         {
                             Id = "AgentRole1",
-                            Name = "Agent",
+                            Name = "AGENT",
                             NormalizedName = "Agent"
                         },
                         new
                         {
                             Id = "ClientRole1",
-                            Name = "Client",
+                            Name = "CLIENT",
                             NormalizedName = "Client"
                         });
                 });
@@ -473,13 +473,13 @@ namespace ClientLock.Migrations
                         {
                             Id = "A-001",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a4f11026-7431-423b-b8e6-357df0f41f17",
+                            ConcurrencyStamp = "10fb5c62-3197-4aab-bbe2-51ecdb4c04d1",
                             Email = "tom@clientlock.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEKJRHaO5YBAWJs1FCVf3ce+AiikVkEx3e10Fi5kAlGPefPWM2XXP+06/aJROzfHtwg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKb8YK+X0CCKNKHtmm0W7COoroUVU/Nc9X3R+Mx8LiJpcOpiRmMG01VuztoFjB1maQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "18a8d9ee-c48a-4fdb-9bb6-9424ac28dca6",
+                            SecurityStamp = "0dd1911b-9631-4e1b-b3ce-6222de3faf0c",
                             TwoFactorEnabled = false,
                             UserName = "TomRLaw"
                         },
@@ -487,13 +487,13 @@ namespace ClientLock.Migrations
                         {
                             Id = "A-002",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8d758c80-b8ae-4104-a9dd-19a687d65a17",
+                            ConcurrencyStamp = "4e79c95e-fa68-4f75-8f79-b0bf1c000fad",
                             Email = "sarah@clientlock.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEM78ruK1wz9PLNWbEkpkEbMVZ6WVzBHeZee33zViaNblk9EqoOvQemSZVnbbQbp45w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFExG0H9GYMSXm0i8LmgPzo3i8yBapmKSzzKYZ/VubPZsNVZlt/IFW86exBHOQuX7A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1122666c-71d0-41ed-bd02-c51173500c60",
+                            SecurityStamp = "ead538ea-e2e9-479b-88a8-3ff96e32bc1d",
                             TwoFactorEnabled = false,
                             UserName = "SarahLaw"
                         },
@@ -501,13 +501,13 @@ namespace ClientLock.Migrations
                         {
                             Id = "A-003",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ef7d3dbc-cf3e-49bb-ab76-924c52daf580",
+                            ConcurrencyStamp = "0ac7f3f8-12fc-437c-a139-bcdf892e8c3c",
                             Email = "mike@clientlock.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEHVufU5Q7kg96UCxTWJESahdUn/WgtqfBDPOX5+V+MSj25ks9uELfxiG2JTyscRj3g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEICbnGxMVG6cgGnUeaFfEjoonMIcSRWQLx64wanmpZF4NoWhpBUDGOj69TDPAHskBg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1b876ac0-02e8-41da-a082-f15cf1443e2d",
+                            SecurityStamp = "4d81e40b-1d59-46a5-baaa-b16cbdec0308",
                             TwoFactorEnabled = false,
                             UserName = "MikeLaw"
                         },
@@ -515,13 +515,13 @@ namespace ClientLock.Migrations
                         {
                             Id = "C-001",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d0c28017-f229-44d8-b53f-161abef06cfc",
+                            ConcurrencyStamp = "e88f01f7-2c18-473f-ab53-bff299765af0",
                             Email = "gerold@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEHGejhgqpvGOFoprsd/ONfSz6kpltI1jw+5BKMmPTnVrUp3OSA1FzXW59FpH6Rd5kQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEA3iDqRfEKIdfuwD9DXMbCe4qX1q9HX9wZex1+aQI43DXZs5NipaZQMO8yklRBAmPw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "92392257-28e5-4b9f-8722-90a068157b80",
+                            SecurityStamp = "76884a99-e6a3-4ea1-a25c-b4cadc57ecbd",
                             TwoFactorEnabled = false,
                             UserName = "GeroldG"
                         },
@@ -529,13 +529,13 @@ namespace ClientLock.Migrations
                         {
                             Id = "C-002",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c44dac47-df68-4fe9-9e70-a81114a38e80",
+                            ConcurrencyStamp = "88c00046-e951-4a3d-b494-77290d4f5e09",
                             Email = "amanda@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEKIs6Do3fy5hJSr9yh8636vpqiWHZk8bldZ74prkYAVixetGWf4OoD43yHSte6A+mQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIXpsQVSsTvO2OcWCMtsCzlTcJ7BwMK2Go1Y0HrvgzkOb9J5ZvrGYL015QnsMsDjfg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cb4fe1a1-4d17-452b-a230-ef02e5aa7e54",
+                            SecurityStamp = "021206ea-4883-49ec-9989-b0342dadd140",
                             TwoFactorEnabled = false,
                             UserName = "AmandaP"
                         });
@@ -649,7 +649,7 @@ namespace ClientLock.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ClientLock.Models.UserProfile", b =>
+            modelBuilder.Entity("ClientLock.models.UserProfile", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()

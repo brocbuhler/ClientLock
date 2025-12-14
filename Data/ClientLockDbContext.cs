@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using ClientLock.Models;
+using ClientLock.models;
 using Microsoft.AspNetCore.Identity;
 using ClientLock.models;
 
@@ -27,8 +27,8 @@ public class ClientLockDbContext : IdentityDbContext<IdentityUser>
 
         modelBuilder.Entity<IdentityRole>().HasData(
         
-            new IdentityRole {Id = "AgentRole1", Name = "Agent", NormalizedName = "Agent"},
-            new IdentityRole {Id = "ClientRole1", Name = "Client", NormalizedName = "Client"}
+            new IdentityRole {Id = "AgentRole1", Name = "AGENT", NormalizedName = "Agent"},
+            new IdentityRole {Id = "ClientRole1", Name = "CLIENT", NormalizedName = "Client"}
         );
 
         modelBuilder.Entity<IdentityUser>().HasData(

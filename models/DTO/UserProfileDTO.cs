@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
-namespace ClientLock.Models.DTO;
+namespace ClientLock.models.DTO;
 
 public class UserProfileDTO
 {

@@ -5,10 +5,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Text;
-using ClientLock.Models;
-using ClientLock.Models.DTO;
+using ClientLock.models;
 using ClientLock.Data;
-using ClientLock.Models.DTOs;
+using ClientLock.models.DTO;
 
 namespace ClientLock.Controllers;
 

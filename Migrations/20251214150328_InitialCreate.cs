@@ -287,8 +287,8 @@ namespace ClientLock.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "AgentRole1", null, "Agent", "Agent" },
-                    { "ClientRole1", null, "Client", "Client" }
+                    { "AgentRole1", null, "AGENT", "Agent" },
+                    { "ClientRole1", null, "CLIENT", "Client" }
                 });
 
             migrationBuilder.InsertData(
@@ -296,11 +296,11 @@ namespace ClientLock.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "A-001", 0, "a4f11026-7431-423b-b8e6-357df0f41f17", "tom@clientlock.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEKJRHaO5YBAWJs1FCVf3ce+AiikVkEx3e10Fi5kAlGPefPWM2XXP+06/aJROzfHtwg==", null, false, "18a8d9ee-c48a-4fdb-9bb6-9424ac28dca6", false, "TomRLaw" },
-                    { "A-002", 0, "8d758c80-b8ae-4104-a9dd-19a687d65a17", "sarah@clientlock.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEM78ruK1wz9PLNWbEkpkEbMVZ6WVzBHeZee33zViaNblk9EqoOvQemSZVnbbQbp45w==", null, false, "1122666c-71d0-41ed-bd02-c51173500c60", false, "SarahLaw" },
-                    { "A-003", 0, "ef7d3dbc-cf3e-49bb-ab76-924c52daf580", "mike@clientlock.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEHVufU5Q7kg96UCxTWJESahdUn/WgtqfBDPOX5+V+MSj25ks9uELfxiG2JTyscRj3g==", null, false, "1b876ac0-02e8-41da-a082-f15cf1443e2d", false, "MikeLaw" },
-                    { "C-001", 0, "d0c28017-f229-44d8-b53f-161abef06cfc", "gerold@gmail.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEHGejhgqpvGOFoprsd/ONfSz6kpltI1jw+5BKMmPTnVrUp3OSA1FzXW59FpH6Rd5kQ==", null, false, "92392257-28e5-4b9f-8722-90a068157b80", false, "GeroldG" },
-                    { "C-002", 0, "c44dac47-df68-4fe9-9e70-a81114a38e80", "amanda@gmail.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEKIs6Do3fy5hJSr9yh8636vpqiWHZk8bldZ74prkYAVixetGWf4OoD43yHSte6A+mQ==", null, false, "cb4fe1a1-4d17-452b-a230-ef02e5aa7e54", false, "AmandaP" }
+                    { "A-001", 0, "10fb5c62-3197-4aab-bbe2-51ecdb4c04d1", "tom@clientlock.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEKb8YK+X0CCKNKHtmm0W7COoroUVU/Nc9X3R+Mx8LiJpcOpiRmMG01VuztoFjB1maQ==", null, false, "0dd1911b-9631-4e1b-b3ce-6222de3faf0c", false, "TomRLaw" },
+                    { "A-002", 0, "4e79c95e-fa68-4f75-8f79-b0bf1c000fad", "sarah@clientlock.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEFExG0H9GYMSXm0i8LmgPzo3i8yBapmKSzzKYZ/VubPZsNVZlt/IFW86exBHOQuX7A==", null, false, "ead538ea-e2e9-479b-88a8-3ff96e32bc1d", false, "SarahLaw" },
+                    { "A-003", 0, "0ac7f3f8-12fc-437c-a139-bcdf892e8c3c", "mike@clientlock.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEICbnGxMVG6cgGnUeaFfEjoonMIcSRWQLx64wanmpZF4NoWhpBUDGOj69TDPAHskBg==", null, false, "4d81e40b-1d59-46a5-baaa-b16cbdec0308", false, "MikeLaw" },
+                    { "C-001", 0, "e88f01f7-2c18-473f-ab53-bff299765af0", "gerold@gmail.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEA3iDqRfEKIdfuwD9DXMbCe4qX1q9HX9wZex1+aQI43DXZs5NipaZQMO8yklRBAmPw==", null, false, "76884a99-e6a3-4ea1-a25c-b4cadc57ecbd", false, "GeroldG" },
+                    { "C-002", 0, "88c00046-e951-4a3d-b494-77290d4f5e09", "amanda@gmail.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEIXpsQVSsTvO2OcWCMtsCzlTcJ7BwMK2Go1Y0HrvgzkOb9J5ZvrGYL015QnsMsDjfg==", null, false, "021206ea-4883-49ec-9989-b0342dadd140", false, "AmandaP" }
                 });
 
             migrationBuilder.InsertData(
