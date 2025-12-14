@@ -1,4 +1,4 @@
-namespace ClientLock.Models.DTOs;
+namespace ClientLock.models.DTO;
 
 public class RegistrationDTO
 {
