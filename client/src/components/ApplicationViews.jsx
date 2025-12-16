@@ -60,7 +60,7 @@ const location = useLocation();
           path="meeting-form"
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <MeetingForm meetingAgent={meetingAgent}/>
+              <MeetingForm meetingAgent={meetingAgent} loggedInUser={loggedInUser}/>
             </AuthorizedRoute>
           }
         />
