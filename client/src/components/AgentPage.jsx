@@ -52,7 +52,7 @@ export default function Agents() {
               {c.agentLawPractices?.map((alp) => (
                 <Badge
                   key={alp.lawPractice.id}
-                  color="primary"
+                  color="success"
                   pill
                   style={{ marginRight: "6px" }}
                 >

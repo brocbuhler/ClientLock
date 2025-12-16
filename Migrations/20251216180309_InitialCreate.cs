@@ -15,20 +15,6 @@ namespace ClientLock.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AgentLawPractices",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    AgentId = table.Column<int>(type: "integer", nullable: false),
-                    LawPracticeId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AgentLawPractices", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Agents",
                 columns: table => new
                 {
@@ -259,17 +245,30 @@ namespace ClientLock.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AgentLawPractices",
-                columns: new[] { "Id", "AgentId", "LawPracticeId" },
-                values: new object[,]
+            migrationBuilder.CreateTable(
+                name: "AgentLawPractices",
+                columns: table => new
                 {
-                    { 1, 1, 1 },
-                    { 2, 1, 2 },
-                    { 3, 2, 2 },
-                    { 4, 2, 3 },
-                    { 5, 3, 3 },
-                    { 6, 3, 4 }
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AgentId = table.Column<int>(type: "integer", nullable: false),
+                    LawPracticeId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AgentLawPractices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AgentLawPractices_Agents_AgentId",
+                        column: x => x.AgentId,
+                        principalTable: "Agents",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AgentLawPractices_LawPractices_LawPracticeId",
+                        column: x => x.LawPracticeId,
+                        principalTable: "LawPractices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -277,9 +276,9 @@ namespace ClientLock.Migrations
                 columns: new[] { "Id", "Email", "FirstName", "Image", "LastName", "Phone", "UserProfileId" },
                 values: new object[,]
                 {
-                    { 1, "tom@clientlock.com", "Thomas", "https://example.com/agent1.jpg", "Riley", "6151112222", 1 },
-                    { 2, "sarah@clientlock.com", "Sarah", "https://example.com/agent2.jpg", "Nguyen", "6153334444", 2 },
-                    { 3, "mike@clientlock.com", "Mike", "https://example.com/agent3.jpg", "Jordan", "6155556666", 3 }
+                    { 1, "tom@clientlock.com", "Thomas", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs10cupyp3Wf-pZvdPjGQuKne14ngVZbYdDQ&s", "Riley", "6151112222", 1 },
+                    { 2, "sarah@clientlock.com", "Sarah", "https://images.squarespace-cdn.com/content/v1/5ec689480cc22c2d441e152f/9cbf4e0b-926f-431b-b27a-11c5ac3bd8df/corporate-headshots-professional-photography-connecticut-ct-photo-studio-nlalor-what-to-wear-women.jpg", "Nguyen", "6153334444", 2 },
+                    { 3, "mike@clientlock.com", "Mike", "https://images.squarespace-cdn.com/content/v1/66a4f1fc404ca05cac7d8ec8/eb06ba09-879c-4da9-b4ea-ee0909600e54/Professional+Headshots+Male", "Jordan", "6155556666", 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -296,11 +295,11 @@ namespace ClientLock.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "A-001", 0, "10fb5c62-3197-4aab-bbe2-51ecdb4c04d1", "tom@clientlock.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEKb8YK+X0CCKNKHtmm0W7COoroUVU/Nc9X3R+Mx8LiJpcOpiRmMG01VuztoFjB1maQ==", null, false, "0dd1911b-9631-4e1b-b3ce-6222de3faf0c", false, "TomRLaw" },
-                    { "A-002", 0, "4e79c95e-fa68-4f75-8f79-b0bf1c000fad", "sarah@clientlock.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEFExG0H9GYMSXm0i8LmgPzo3i8yBapmKSzzKYZ/VubPZsNVZlt/IFW86exBHOQuX7A==", null, false, "ead538ea-e2e9-479b-88a8-3ff96e32bc1d", false, "SarahLaw" },
-                    { "A-003", 0, "0ac7f3f8-12fc-437c-a139-bcdf892e8c3c", "mike@clientlock.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEICbnGxMVG6cgGnUeaFfEjoonMIcSRWQLx64wanmpZF4NoWhpBUDGOj69TDPAHskBg==", null, false, "4d81e40b-1d59-46a5-baaa-b16cbdec0308", false, "MikeLaw" },
-                    { "C-001", 0, "e88f01f7-2c18-473f-ab53-bff299765af0", "gerold@gmail.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEA3iDqRfEKIdfuwD9DXMbCe4qX1q9HX9wZex1+aQI43DXZs5NipaZQMO8yklRBAmPw==", null, false, "76884a99-e6a3-4ea1-a25c-b4cadc57ecbd", false, "GeroldG" },
-                    { "C-002", 0, "88c00046-e951-4a3d-b494-77290d4f5e09", "amanda@gmail.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEIXpsQVSsTvO2OcWCMtsCzlTcJ7BwMK2Go1Y0HrvgzkOb9J5ZvrGYL015QnsMsDjfg==", null, false, "021206ea-4883-49ec-9989-b0342dadd140", false, "AmandaP" }
+                    { "A-001", 0, "1b94e675-20a1-4779-96e8-96060839a29b", "tom@clientlock.com", false, false, null, null, null, "AQAAAAIAAYagAAAAENNEt5qlBenm9N5QEBMxGa5etm5AaTXKbQ9slK4F8ApcGp4MvmdYzAJyBPjLNrIJbA==", null, false, "f15f14fa-6a64-45f2-b192-34e3822d75d4", false, "TomRLaw" },
+                    { "A-002", 0, "47b7397c-812e-47df-9470-161ee51641c9", "sarah@clientlock.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEP14rZeNEA3FYjqhLjxITBI6lA7GIPDRMJ9s11QUGF0GFAzc2eTVOWR2I18JbVjKJg==", null, false, "fee8e497-937c-481a-8cdd-6ad3cff6fd12", false, "SarahLaw" },
+                    { "A-003", 0, "160cb832-8400-4f52-82f9-6f2b09f8c40b", "mike@clientlock.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEBKAuqQzJ9E3abMbo+XmvlslScQY7V6ShP9ZWAgNJZItDCY3qAHkXWQFZeOIBTgcRQ==", null, false, "34ccb27f-40d3-4084-8b11-eda304ce4009", false, "MikeLaw" },
+                    { "C-001", 0, "4fe23a01-751c-455a-ba9a-51438738d54f", "gerold@gmail.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEHVTincbxIMubVQ9iiV81TMDxd5m4sIKXepnWykrO0ADIRhAxc2uhQbV1z9gjoLV1A==", null, false, "4845833f-d1d1-4795-a36d-b6973c368716", false, "GeroldG" },
+                    { "C-002", 0, "cbb4494b-cfc9-43ff-a862-d64f7db728c5", "amanda@gmail.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEPXsAyvxFeP2565qghoNJjqn8cCcezg0NcP7IVOkbP1zCvMELuI0xtvUR5p51WY3AQ==", null, false, "91ab04c4-0c41-4d45-9b96-3c04feaf98ee", false, "AmandaP" }
                 });
 
             migrationBuilder.InsertData(
@@ -329,6 +328,19 @@ namespace ClientLock.Migrations
                 values: new object[] { 1, 1, 1, "DUI charge", 2, new DateTime(2025, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.InsertData(
+                table: "AgentLawPractices",
+                columns: new[] { "Id", "AgentId", "LawPracticeId" },
+                values: new object[,]
+                {
+                    { 1, 1, 1 },
+                    { 2, 1, 2 },
+                    { 3, 2, 2 },
+                    { 4, 2, 3 },
+                    { 5, 3, 3 },
+                    { 6, 3, 4 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
@@ -351,6 +363,16 @@ namespace ClientLock.Migrations
                     { 4, "C-001" },
                     { 5, "C-002" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AgentLawPractices_AgentId",
+                table: "AgentLawPractices",
+                column: "AgentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AgentLawPractices_LawPracticeId",
+                table: "AgentLawPractices",
+                column: "LawPracticeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -402,9 +424,6 @@ namespace ClientLock.Migrations
                 name: "AgentLawPractices");
 
             migrationBuilder.DropTable(
-                name: "Agents");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -423,13 +442,16 @@ namespace ClientLock.Migrations
                 name: "Clients");
 
             migrationBuilder.DropTable(
-                name: "LawPractices");
-
-            migrationBuilder.DropTable(
                 name: "Meetings");
 
             migrationBuilder.DropTable(
                 name: "UserProfiles");
+
+            migrationBuilder.DropTable(
+                name: "Agents");
+
+            migrationBuilder.DropTable(
+                name: "LawPractices");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
