@@ -1,21 +1,37 @@
 import { useState, useEffect } from "react";
 import { Badge, Button, Card, CardBody, ListGroupItem } from "reactstrap";
 import { getAgents } from "../managers/agentManager";
+import { getLawPracticeAgents, getLawPractices } from "../managers/lawPracticeManager";
 
-export default function Agents() {
+export default function Agents({ filteredAgents }) {
   const [agents, setAgents] = useState([]);
-
-  const getAllAgents = () => {
-    getAgents().then(setAgents);
-  };
+  const [laws, setLaws] = useState([]);
+  const [dropDownAgents, setDropDownAgents] = useState([]);
 
   const meetingHandler = () => {
     console.warn("MeetingScheduled");
   };
+
+  const dropDownFilter = (id) => {
+    if (!id) {
+      setDropDownAgents([]);
+      return;
+    }
+    getLawPracticeAgents(id).then((agents) => {
+      const filtered = agents.map((alp) => alp.agent);
+      setDropDownAgents(filtered);
+    });
+  }
   
   useEffect(() => {
-    getAllAgents();
-  }, []);
+    getLawPractices().then(setLaws);
+    if (filteredAgents) {
+      setAgents(filteredAgents)
+    } else if (dropDownAgents.length > 0) {
+      setAgents(dropDownAgents)
+    } else {
+    getAgents().then(setAgents)};
+  }, [filteredAgents, dropDownAgents]);
 
   return (
     <Card
@@ -28,10 +44,26 @@ export default function Agents() {
         margin: "20px auto",
       }}
     >
-      <CardBody>
         <h2 style={{ textAlign: "center", marginBottom: "1rem" }}>
           Agents
         </h2>
+        {!filteredAgents && (
+          <div style={{ marginBottom: "1rem" }}>
+            <select
+              className="form-select"
+              defaultValue=""
+              onChange={(e) => dropDownFilter(e.target.value)}
+            >
+              <option value="">All Agents</option>
+              {laws.map((l) => (
+                <option key={l.id} value={l.id}>
+                  {l.type}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+      <CardBody>
         {agents.map((c) => (
           <ListGroupItem
             key={c.id}
@@ -45,9 +77,22 @@ export default function Agents() {
           >
             <div style={{ marginBottom: "8px" }}>
               <div><strong>{c.firstName} {c.lastName}</strong></div>
+              {c.image && (
+                <img
+                  src={c.image}
+                  style={{
+                    width: "100%",
+                    maxWidth: "150px",
+                    height: "150px",
+                    objectFit: "cover",
+                    borderRadius: "8px",
+                    marginTop: "6px",
+                    marginBottom: "6px",
+                  }}
+                />
+              )}
               <div>{c.phone}</div>
               <div>{c.email}</div>
-              <div>{c.image}</div>
               <div style={{ marginTop: "6px" }}>
               {c.agentLawPractices?.map((alp) => (
                 <Badge
@@ -75,4 +120,4 @@ export default function Agents() {
   );
 }
 
-//next steps: 2. make see agents button functional 3. make a drop down filter for agents 4. do needed set up for schedule a meeting button.
+//next steps: 3. make a drop down filter for agents 4. do needed set up for schedule a meeting button.
