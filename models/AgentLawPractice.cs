@@ -8,4 +8,5 @@ public class AgentLawPractice
     public Agent Agent { get; set; }
     [Required]
     public int LawPracticeId { get; set; }
+    public LawPractice LawPractice { get; set; }
 }

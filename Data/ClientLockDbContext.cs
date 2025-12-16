@@ -124,7 +124,7 @@ public class ClientLockDbContext : IdentityDbContext<IdentityUser>
                 UserProfileId = 1,
                 Phone = "6151112222",
                 Email = "tom@clientlock.com",
-                Image = "https://example.com/agent1.jpg"
+                Image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs10cupyp3Wf-pZvdPjGQuKne14ngVZbYdDQ&s"
             },
             new Agent
             {
@@ -134,7 +134,7 @@ public class ClientLockDbContext : IdentityDbContext<IdentityUser>
                 UserProfileId = 2,
                 Phone = "6153334444",
                 Email = "sarah@clientlock.com",
-                Image = "https://example.com/agent2.jpg"
+                Image = "https://images.squarespace-cdn.com/content/v1/5ec689480cc22c2d441e152f/9cbf4e0b-926f-431b-b27a-11c5ac3bd8df/corporate-headshots-professional-photography-connecticut-ct-photo-studio-nlalor-what-to-wear-women.jpg"
             },
             new Agent
             {
@@ -144,7 +144,7 @@ public class ClientLockDbContext : IdentityDbContext<IdentityUser>
                 UserProfileId = 3,
                 Phone = "6155556666",
                 Email = "mike@clientlock.com",
-                Image = "https://example.com/agent3.jpg"
+                Image = "https://images.squarespace-cdn.com/content/v1/66a4f1fc404ca05cac7d8ec8/eb06ba09-879c-4da9-b4ea-ee0909600e54/Professional+Headshots+Male"
             }
         );
 

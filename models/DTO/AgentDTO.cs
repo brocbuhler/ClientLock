@@ -13,4 +13,5 @@ public class AgentDTO
     [Required]
     public string Email { get; set; }
     public string Image { get; set; }
+    public List<AgentLawPracticeDTO> AgentLawPractices { get; set; }
 }

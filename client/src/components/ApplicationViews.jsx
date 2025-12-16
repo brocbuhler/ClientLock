@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { AuthorizedRoute } from "./auth/AuthorizedRoute";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
@@ -7,8 +7,20 @@ import AgentPage from "./AgentPage";
 import LawServicePage from "./LawServicePage";
 import MeetingView from "./MeetingView";
 import MeetingForm from "./MeetingForm";
+import { useState, useEffect } from "react";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
+const [filteredAgents, setFilteredAgents] = useState(null);
+const [meetingAgent, setMeetingAgent] = useState(null)
+const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname !== "/agent" && location.pathname !== "/meeting-form") {
+      setFilteredAgents(null);
+      setMeetingAgent(null);
+    }
+  }, [location.pathname]);
+
   return (
     <Routes>
       <Route path="/">
@@ -24,7 +36,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           path="agent"
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <AgentPage/>
+              <AgentPage filteredAgents={filteredAgents} setMeetingAgent={setMeetingAgent}/>
             </AuthorizedRoute>
           }
         />
@@ -32,7 +44,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           path="law-service"
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <LawServicePage/>
+              <LawServicePage setFilteredAgents={setFilteredAgents} />
             </AuthorizedRoute>
           }
         />
@@ -48,7 +60,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           path="meeting-form"
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <MeetingForm/>
+              <MeetingForm meetingAgent={meetingAgent}/>
             </AuthorizedRoute>
           }
         />

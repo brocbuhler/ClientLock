@@ -1,17 +1,22 @@
 import { useState, useEffect } from "react";
 import { Button, Card, CardBody, ListGroup, ListGroupItem } from "reactstrap";
-import { getLawPracticeAgents, getLawPractices } from "../managers/LawPracticeManager";
+import { getLawPracticeAgents, getLawPractices } from "../managers/lawPracticeManager";
+import { useNavigate } from "react-router-dom";
 
-export default function Law() {
+export default function Law({ setFilteredAgents }) {
   const [lawPractices, setLawPractices] = useState([]);
-  const [lawPracticeAgents, setLawPracticeAgents ] = useState([]);
+  const navigate = useNavigate();
+
   const getAllLawPractices = () => {
     getLawPractices().then(setLawPractices);
   };
 
   const seeAgentsHandler = (id) => {
-    getLawPracticeAgents(id).then(setLawPracticeAgents)
-    console.warn(lawPracticeAgents);
+    getLawPracticeAgents(id).then((agents) => {
+      const filtered = agents.map((alp) => alp.agent);
+      setFilteredAgents(filtered);
+      navigate("/agent");
+    });
   };
   
   useEffect(() => {
