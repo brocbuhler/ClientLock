@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button, Card, CardBody, ListGroup, ListGroupItem } from "reactstrap";
-import { getLawPracticeAgents, getLawPractices } from "../managers/LawPracticeManager";
+import { getLawPracticeAgents, getLawPractices } from "../managers/lawPracticeManager";
 
 export default function Law() {
   const [lawPractices, setLawPractices] = useState([]);
