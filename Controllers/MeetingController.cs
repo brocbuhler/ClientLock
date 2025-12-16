@@ -27,4 +27,32 @@ public class MeetingController : ControllerBase
         _dbContext.SaveChanges();
         return Created($"api/meeting/{meetingToCreate.Id}", meetingToCreate);
     }
+
+    [HttpGet("{clientId}")]
+    public IActionResult GetByClientId(int clientId)
+    {
+        return Ok(_dbContext.Meetings
+        .Where(m => m.ClientId == clientId)
+        .Include(m => m.Agent)
+        .Include(m => m.LawPractice)
+        .Select(m => new MeetingDTO
+        {
+            Id = m.Id,
+            MeetingTime = m.MeetingTime,
+            ConsultingOn = m.ConsultingOn,
+            Agent = new AgentDTO
+            {
+                Id = m.Agent.Id,
+                FirstName = m.Agent.FirstName,
+                LastName = m.Agent.LastName
+            },
+            LawPractice = new LawPracticeDTO
+            {
+                Id = m.LawPractice.Id,
+                Type = m.LawPractice.Type
+            }
+
+        }).ToList());
+
+    }
 }
