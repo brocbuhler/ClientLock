@@ -10,4 +10,6 @@ public class UserProfile
     public string IdentityUserId { get; set; }
 
     public IdentityUser IdentityUser { get; set; }
+    public int ClientId { get; set;}
+    public int AgentId { get; set; }
 }

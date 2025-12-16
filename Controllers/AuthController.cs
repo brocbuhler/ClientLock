@@ -94,25 +94,34 @@ public class AuthController : ControllerBase
     }
 
     [HttpGet("Me")]
-    [Authorize]
-    public IActionResult Me()
-    {
-        var identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var profile = _dbContext.UserProfiles.SingleOrDefault(up => up.IdentityUserId == identityUserId);
-        var roles = User.FindAll(ClaimTypes.Role).Select(r => r.Value).ToList();
-        if (profile != null)
-        {
-            var userDto = new UserProfileDTO
-            {
-                Id = profile.Id,
-                IdentityUserId = identityUserId,
-                Roles = roles
-            };
+[Authorize]
+public IActionResult Me()
+{
+    var identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return Ok(userDto);
-        }
-        return NotFound();
+    var profile = _dbContext.UserProfiles.SingleOrDefault(up => up.IdentityUserId == identityUserId);
+    var roles = User.FindAll(ClaimTypes.Role).Select(r => r.Value).ToList();
+
+    if (profile != null)
+    {
+        var client = _dbContext.Clients.SingleOrDefault(c => c.UserProfileId == profile.Id);
+        var agent = _dbContext.Agents.SingleOrDefault(a => a.UserProfileId == profile.Id);
+
+        var userDto = new UserProfileDTO
+        {
+            Id = profile.Id,
+            IdentityUserId = identityUserId,
+            Roles = roles,
+            ClientId = client?.Id,  
+            AgentId = agent?.Id     
+        };
+
+        return Ok(userDto);
     }
+
+    return NotFound();
+}
+
 
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegistrationDTO registration)

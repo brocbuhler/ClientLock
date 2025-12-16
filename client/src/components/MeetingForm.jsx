@@ -1,32 +1,35 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { createMeeting } from '../managers/meetingManager'
 import { useNavigate } from 'react-router-dom';
 import { Button, ListGroupItem } from 'reactstrap';
+import { tryGetLoggedInUser } from '../managers/authManager';
 
-export default function MeetingForm({ meetingAgent, loggedInUser}) {
+export default function MeetingForm({ meetingAgent }) {
   const [meetingTime, setMeetingTime] = useState("");
   const [consultingOn, setConsultingOn] = useState("");
   const navigate = useNavigate();
 
-  const clientId = 1;
-
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
+
+    if (!meetingAgent) {
+    console.warn("No agent selected");
+    navigate("/");
+    return;
+  }
+
+    const user = await tryGetLoggedInUser();
     const meetingToSchedule = {
       meetingTime,
       consultingOn,
       agentId: meetingAgent.id,
-      clientId,
+      clientId: user?.id,
       lawPracticeId: meetingAgent.lawPracticeId
     };
     createMeeting(meetingToSchedule).then(() => {
       navigate("/");
     });
   }
-
-  useEffect(() => {
-    console.warn("Logged in user object:", loggedInUser);
-  }, [loggedInUser]);
 
   return (
     <>
