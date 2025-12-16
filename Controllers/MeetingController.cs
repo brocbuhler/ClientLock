@@ -4,6 +4,7 @@ using ClientLock.models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 
 namespace ClientLock.Controllers;
 
@@ -29,6 +30,7 @@ public class MeetingController : ControllerBase
     }
 
     [HttpGet("{clientId}")]
+    [Authorize]
     public IActionResult GetByClientId(int clientId)
     {
         return Ok(_dbContext.Meetings
@@ -54,5 +56,31 @@ public class MeetingController : ControllerBase
 
         }).ToList());
 
+    }
+
+    [HttpDelete("{id}")]
+    [Authorize]
+    public IActionResult Delete(int id)
+    {
+        Meeting meetingToDelete = _dbContext.Meetings.FirstOrDefault(m => m.Id == id);
+        if (meetingToDelete == null)
+        {
+            return NotFound();
+        }
+        _dbContext.SaveChanges();
+        return NoContent();
+    }
+
+    [HttpPatch("{id}")]
+    public IActionResult Update(int id, Meeting Update)
+    {
+        Meeting meetingToUpdate = _dbContext.Meetings.FirstOrDefault(c => c.Id == id);
+        if (meetingToUpdate == null)
+        {
+            return NotFound();
+        }
+        meetingToUpdate.MeetingTime = Update.MeetingTime;
+        _dbContext.SaveChanges();
+        return NoContent();
     }
 }
