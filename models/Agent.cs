@@ -13,4 +13,5 @@ public class Agent
     [Required]
     public string Email { get; set; }
     public string Image { get; set; }
+    public List<AgentLawPractice> AgentLawPractices { get; set; }
 }
