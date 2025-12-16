@@ -11,11 +11,13 @@ import { useState, useEffect } from "react";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
 const [filteredAgents, setFilteredAgents] = useState(null);
+const [meetingAgent, setMeetingAgent] = useState(null)
 const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname !== "/agent") {
+    if (location.pathname !== "/agent" && location.pathname !== "/meeting-form") {
       setFilteredAgents(null);
+      setMeetingAgent(null);
     }
   }, [location.pathname]);
 
@@ -34,7 +36,7 @@ const location = useLocation();
           path="agent"
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <AgentPage filteredAgents={filteredAgents} />
+              <AgentPage filteredAgents={filteredAgents} setMeetingAgent={setMeetingAgent}/>
             </AuthorizedRoute>
           }
         />
@@ -58,7 +60,7 @@ const location = useLocation();
           path="meeting-form"
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <MeetingForm/>
+              <MeetingForm meetingAgent={meetingAgent}/>
             </AuthorizedRoute>
           }
         />

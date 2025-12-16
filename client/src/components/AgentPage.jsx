@@ -2,14 +2,18 @@ import { useState, useEffect } from "react";
 import { Badge, Button, Card, CardBody, ListGroupItem } from "reactstrap";
 import { getAgents } from "../managers/agentManager";
 import { getLawPracticeAgents, getLawPractices } from "../managers/lawPracticeManager";
+import { useNavigate } from "react-router-dom";
 
-export default function Agents({ filteredAgents }) {
+export default function Agents({ filteredAgents, setMeetingAgent }) {
   const [agents, setAgents] = useState([]);
   const [laws, setLaws] = useState([]);
   const [dropDownAgents, setDropDownAgents] = useState([]);
+  const navigate = useNavigate();
 
-  const meetingHandler = () => {
-    console.warn("MeetingScheduled");
+
+  const meetingHandler = (agent) => {
+    setMeetingAgent(agent);
+    navigate("/meeting-form");
   };
 
   const dropDownFilter = (id) => {
@@ -109,7 +113,7 @@ export default function Agents({ filteredAgents }) {
             <Button
               color="danger"
               size="sm"
-              onClick={() => meetingHandler(c.id)}
+              onClick={() => meetingHandler(c)}
             >
               Schedule A Meeting!
             </Button>
