@@ -232,7 +232,9 @@ namespace ClientLock.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    IdentityUserId = table.Column<string>(type: "text", nullable: false)
+                    IdentityUserId = table.Column<string>(type: "text", nullable: false),
+                    ClientId = table.Column<int>(type: "integer", nullable: false),
+                    AgentId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -295,11 +297,11 @@ namespace ClientLock.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "A-001", 0, "1b94e675-20a1-4779-96e8-96060839a29b", "tom@clientlock.com", false, false, null, null, null, "AQAAAAIAAYagAAAAENNEt5qlBenm9N5QEBMxGa5etm5AaTXKbQ9slK4F8ApcGp4MvmdYzAJyBPjLNrIJbA==", null, false, "f15f14fa-6a64-45f2-b192-34e3822d75d4", false, "TomRLaw" },
-                    { "A-002", 0, "47b7397c-812e-47df-9470-161ee51641c9", "sarah@clientlock.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEP14rZeNEA3FYjqhLjxITBI6lA7GIPDRMJ9s11QUGF0GFAzc2eTVOWR2I18JbVjKJg==", null, false, "fee8e497-937c-481a-8cdd-6ad3cff6fd12", false, "SarahLaw" },
-                    { "A-003", 0, "160cb832-8400-4f52-82f9-6f2b09f8c40b", "mike@clientlock.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEBKAuqQzJ9E3abMbo+XmvlslScQY7V6ShP9ZWAgNJZItDCY3qAHkXWQFZeOIBTgcRQ==", null, false, "34ccb27f-40d3-4084-8b11-eda304ce4009", false, "MikeLaw" },
-                    { "C-001", 0, "4fe23a01-751c-455a-ba9a-51438738d54f", "gerold@gmail.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEHVTincbxIMubVQ9iiV81TMDxd5m4sIKXepnWykrO0ADIRhAxc2uhQbV1z9gjoLV1A==", null, false, "4845833f-d1d1-4795-a36d-b6973c368716", false, "GeroldG" },
-                    { "C-002", 0, "cbb4494b-cfc9-43ff-a862-d64f7db728c5", "amanda@gmail.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEPXsAyvxFeP2565qghoNJjqn8cCcezg0NcP7IVOkbP1zCvMELuI0xtvUR5p51WY3AQ==", null, false, "91ab04c4-0c41-4d45-9b96-3c04feaf98ee", false, "AmandaP" }
+                    { "A-001", 0, "be27cc22-47bf-4120-a763-e0e2e539a0a1", "tom@clientlock.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEMZ1zUHEovTzirmrldp3+ISwgtDGgU3kwTLvl2/yOXjnFnZht/SkVF5gQ2eW35mZpQ==", null, false, "dbef25ba-4f97-4c80-ae0a-d3169e41e693", false, "TomRLaw" },
+                    { "A-002", 0, "81159a3d-691f-40e4-bc97-21d901df00a8", "sarah@clientlock.com", false, false, null, null, null, "AQAAAAIAAYagAAAAELsqpIjufOid8N1Krbd791u/sOshQON9HHTXFdHLHcOQV4KMvrgNFRDmmVm3y4l0SQ==", null, false, "97189f2e-c805-4598-9be0-dfd3fa45d269", false, "SarahLaw" },
+                    { "A-003", 0, "228806f2-ad33-49ed-8e7e-1fd3677ee39e", "mike@clientlock.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEP28vXC1idQqf3gAe9QWDbvBQOJy6EkmXcluxj67s59iBqXFnbVX7xFtSaqhGDh1uw==", null, false, "acca7c1b-a1d2-4e02-aa94-eaa9ce7086ae", false, "MikeLaw" },
+                    { "C-001", 0, "26ad0f69-0ff3-4dc1-a56c-cc284f2af82e", "gerold@gmail.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEHPX7gf5+lrP8pAUhCVcgANXG+CwvHXJSH1xXSJalNVxzcCdy/4RECbHDSVckx1GeQ==", null, false, "51626e79-023a-4b70-9f81-d59e6e0592e9", false, "GeroldG" },
+                    { "C-002", 0, "c2ed127a-fb9a-42fe-88fb-a039b17c0b8c", "amanda@gmail.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEJ5fTYYkzTpTwnjXPTqLL+AMIk+EN4NHfVmork25S3ZK4S8zIvWPKIg9Of3fGZag/g==", null, false, "4afc539f-0404-4da7-af1e-19deccdb2bbf", false, "AmandaP" }
                 });
 
             migrationBuilder.InsertData(
@@ -354,14 +356,14 @@ namespace ClientLock.Migrations
 
             migrationBuilder.InsertData(
                 table: "UserProfiles",
-                columns: new[] { "Id", "IdentityUserId" },
+                columns: new[] { "Id", "AgentId", "ClientId", "IdentityUserId" },
                 values: new object[,]
                 {
-                    { 1, "A-001" },
-                    { 2, "A-002" },
-                    { 3, "A-003" },
-                    { 4, "C-001" },
-                    { 5, "C-002" }
+                    { 1, 1, 0, "A-001" },
+                    { 2, 2, 0, "A-002" },
+                    { 3, 3, 0, "A-003" },
+                    { 4, 0, 1, "C-001" },
+                    { 5, 0, 2, "C-002" }
                 });
 
             migrationBuilder.CreateIndex(

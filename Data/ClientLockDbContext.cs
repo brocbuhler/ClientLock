@@ -107,11 +107,11 @@ public class ClientLockDbContext : IdentityDbContext<IdentityUser>
 
         modelBuilder.Entity<UserProfile>().HasData(
 
-            new UserProfile { Id = 1, IdentityUserId = "A-001" },
-            new UserProfile { Id = 2, IdentityUserId = "A-002" },
-            new UserProfile { Id = 3, IdentityUserId = "A-003" },
-            new UserProfile { Id = 4, IdentityUserId = "C-001" },
-            new UserProfile { Id = 5, IdentityUserId = "C-002" }
+            new UserProfile { Id = 1, IdentityUserId = "A-001", AgentId = 1 },
+            new UserProfile { Id = 2, IdentityUserId = "A-002", AgentId = 2 },
+            new UserProfile { Id = 3, IdentityUserId = "A-003", AgentId = 3 },
+            new UserProfile { Id = 4, IdentityUserId = "C-001", ClientId = 1},
+            new UserProfile { Id = 5, IdentityUserId = "C-002", ClientId = 2}
         );
 
         modelBuilder.Entity<Agent>().HasData(

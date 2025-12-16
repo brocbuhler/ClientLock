@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ClientLock.Migrations
 {
     [DbContext(typeof(ClientLockDbContext))]
-    [Migration("20251216180309_InitialCreate")]
+    [Migration("20251216220650_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -306,6 +306,12 @@ namespace ClientLock.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AgentId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("IdentityUserId")
                         .IsRequired()
                         .HasColumnType("text");
@@ -320,26 +326,36 @@ namespace ClientLock.Migrations
                         new
                         {
                             Id = 1,
+                            AgentId = 1,
+                            ClientId = 0,
                             IdentityUserId = "A-001"
                         },
                         new
                         {
                             Id = 2,
+                            AgentId = 2,
+                            ClientId = 0,
                             IdentityUserId = "A-002"
                         },
                         new
                         {
                             Id = 3,
+                            AgentId = 3,
+                            ClientId = 0,
                             IdentityUserId = "A-003"
                         },
                         new
                         {
                             Id = 4,
+                            AgentId = 0,
+                            ClientId = 1,
                             IdentityUserId = "C-001"
                         },
                         new
                         {
                             Id = 5,
+                            AgentId = 0,
+                            ClientId = 2,
                             IdentityUserId = "C-002"
                         });
                 });
@@ -477,13 +493,13 @@ namespace ClientLock.Migrations
                         {
                             Id = "A-001",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1b94e675-20a1-4779-96e8-96060839a29b",
+                            ConcurrencyStamp = "be27cc22-47bf-4120-a763-e0e2e539a0a1",
                             Email = "tom@clientlock.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAENNEt5qlBenm9N5QEBMxGa5etm5AaTXKbQ9slK4F8ApcGp4MvmdYzAJyBPjLNrIJbA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMZ1zUHEovTzirmrldp3+ISwgtDGgU3kwTLvl2/yOXjnFnZht/SkVF5gQ2eW35mZpQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f15f14fa-6a64-45f2-b192-34e3822d75d4",
+                            SecurityStamp = "dbef25ba-4f97-4c80-ae0a-d3169e41e693",
                             TwoFactorEnabled = false,
                             UserName = "TomRLaw"
                         },
@@ -491,13 +507,13 @@ namespace ClientLock.Migrations
                         {
                             Id = "A-002",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "47b7397c-812e-47df-9470-161ee51641c9",
+                            ConcurrencyStamp = "81159a3d-691f-40e4-bc97-21d901df00a8",
                             Email = "sarah@clientlock.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEP14rZeNEA3FYjqhLjxITBI6lA7GIPDRMJ9s11QUGF0GFAzc2eTVOWR2I18JbVjKJg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELsqpIjufOid8N1Krbd791u/sOshQON9HHTXFdHLHcOQV4KMvrgNFRDmmVm3y4l0SQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fee8e497-937c-481a-8cdd-6ad3cff6fd12",
+                            SecurityStamp = "97189f2e-c805-4598-9be0-dfd3fa45d269",
                             TwoFactorEnabled = false,
                             UserName = "SarahLaw"
                         },
@@ -505,13 +521,13 @@ namespace ClientLock.Migrations
                         {
                             Id = "A-003",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "160cb832-8400-4f52-82f9-6f2b09f8c40b",
+                            ConcurrencyStamp = "228806f2-ad33-49ed-8e7e-1fd3677ee39e",
                             Email = "mike@clientlock.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEBKAuqQzJ9E3abMbo+XmvlslScQY7V6ShP9ZWAgNJZItDCY3qAHkXWQFZeOIBTgcRQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEP28vXC1idQqf3gAe9QWDbvBQOJy6EkmXcluxj67s59iBqXFnbVX7xFtSaqhGDh1uw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "34ccb27f-40d3-4084-8b11-eda304ce4009",
+                            SecurityStamp = "acca7c1b-a1d2-4e02-aa94-eaa9ce7086ae",
                             TwoFactorEnabled = false,
                             UserName = "MikeLaw"
                         },
@@ -519,13 +535,13 @@ namespace ClientLock.Migrations
                         {
                             Id = "C-001",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4fe23a01-751c-455a-ba9a-51438738d54f",
+                            ConcurrencyStamp = "26ad0f69-0ff3-4dc1-a56c-cc284f2af82e",
                             Email = "gerold@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEHVTincbxIMubVQ9iiV81TMDxd5m4sIKXepnWykrO0ADIRhAxc2uhQbV1z9gjoLV1A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHPX7gf5+lrP8pAUhCVcgANXG+CwvHXJSH1xXSJalNVxzcCdy/4RECbHDSVckx1GeQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4845833f-d1d1-4795-a36d-b6973c368716",
+                            SecurityStamp = "51626e79-023a-4b70-9f81-d59e6e0592e9",
                             TwoFactorEnabled = false,
                             UserName = "GeroldG"
                         },
@@ -533,13 +549,13 @@ namespace ClientLock.Migrations
                         {
                             Id = "C-002",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cbb4494b-cfc9-43ff-a862-d64f7db728c5",
+                            ConcurrencyStamp = "c2ed127a-fb9a-42fe-88fb-a039b17c0b8c",
                             Email = "amanda@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEPXsAyvxFeP2565qghoNJjqn8cCcezg0NcP7IVOkbP1zCvMELuI0xtvUR5p51WY3AQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJ5fTYYkzTpTwnjXPTqLL+AMIk+EN4NHfVmork25S3ZK4S8zIvWPKIg9Of3fGZag/g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "91ab04c4-0c41-4d45-9b96-3c04feaf98ee",
+                            SecurityStamp = "4afc539f-0404-4da7-af1e-19deccdb2bbf",
                             TwoFactorEnabled = false,
                             UserName = "AmandaP"
                         });
