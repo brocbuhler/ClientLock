@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button, Card, CardBody, ListGroup, ListGroupItem } from "reactstrap";
+import { Badge, Button, Card, CardBody, ListGroupItem } from "reactstrap";
 import { getAgents } from "../managers/agentManager";
 
 export default function Agents() {
@@ -48,8 +48,19 @@ export default function Agents() {
               <div>{c.phone}</div>
               <div>{c.email}</div>
               <div>{c.image}</div>
+              <div style={{ marginTop: "6px" }}>
+              {c.agentLawPractices?.map((alp) => (
+                <Badge
+                  key={alp.lawPractice.id}
+                  color="primary"
+                  pill
+                  style={{ marginRight: "6px" }}
+                >
+                  {alp.lawPractice.type}
+                </Badge>
+              ))}
+              </div>
             </div>
-
             <Button
               color="danger"
               size="sm"
@@ -63,3 +74,5 @@ export default function Agents() {
     </Card>
   );
 }
+
+//next steps: 2. make see agents button functional 3. make a drop down filter for agents 4. do needed set up for schedule a meeting button.
