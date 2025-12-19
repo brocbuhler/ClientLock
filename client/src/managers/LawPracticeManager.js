@@ -5,5 +5,9 @@ export const getLawPractices = () => {
 };
 
 export const getLawPracticeAgents = (lawPracticeId) => {
-  return fetch(`${_apiUrl}/${lawPracticeId}`).then((res) => res.json());
+  return fetch(`${_apiUrl}/practice/${lawPracticeId}`).then((res) => res.json());
+};
+
+export const getAgentLawPractices = (agentId) => {
+  return fetch(`${_apiUrl}/agent/${agentId}`).then((res) => res.json());
 };

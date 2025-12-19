@@ -25,7 +25,7 @@ public class LawController : ControllerBase
     {
         return Ok(_dbContext.LawPractices.Select(c => new LawPracticeDTO {Type = c.Type, Id = c.Id, Description = c.Description}).ToList());
     }
-  [HttpGet("{lawpracticeid}")]
+  [HttpGet("practice/{lawpracticeid}")]
   [Authorize]
   public IActionResult GetAgentByLaw( int lawpracticeid)
     {
@@ -47,6 +47,26 @@ public class LawController : ControllerBase
                 Email = lp.Agent.Email,
                 Image = lp.Agent.Image
             }
+        }).ToList());
+    }
+
+    [HttpGet("agent/{agentId}")]
+    [Authorize]
+  public IActionResult GetLawByAgent( int agentId)
+    {
+        return Ok(_dbContext.AgentLawPractices
+        .Where(lp => lp.AgentId == agentId)
+        .Include(lp => lp.LawPractice)
+        .Select(lp => new AgentLawPracticeDTO
+        {
+            Id = lp.Id,
+            LawPracticeId = lp.LawPracticeId,
+            LawPractice = new LawPracticeDTO
+            {
+                Id = lp.LawPractice.Id,
+                Type = lp.LawPractice.Type
+            },
+            AgentId = lp.AgentId,
         }).ToList());
     }
 }
