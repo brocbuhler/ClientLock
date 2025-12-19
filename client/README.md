@@ -1,16 +1,77 @@
-# React + Vite
+# ClientLock
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ClientLock is a full‑stack web application designed to simplify scheduling and managing meetings between clients and agents. It provides an intuitive interface for booking appointments, managing relationships, and keeping everything organized in one place.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Project Overview
 
-## React Compiler
+ClientLock helps users:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* Schedule meetings between clients and agents
+* Manage agents, clients, and law practices
+* View and organize upcoming meetings
+* Maintain clean, relational data using a well‑structured backend
 
-## Expanding the ESLint configuration
+This project was built as a capstone-style application demonstrating full‑stack development skills using modern tools and best practices.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🎥 Demo
+
+Watch the project in action:
+
+👉 **Loom Demo Video**
+[https://www.loom.com/share/b537b837170147ce8050e27300823503](https://www.loom.com/share/b537b837170147ce8050e27300823503)
+
+---
+
+## 🧠 Planning & Design
+
+### Entity Relationship Diagram (ERD)
+
+The ERD outlines the relationships between agents, clients, meetings, and law practices.
+
+👉 **View ERD**
+[https://dbdiagram.io/d/ClientLock-69232d3e228c5bbc1a1c57dc](https://dbdiagram.io/d/ClientLock-69232d3e228c5bbc1a1c57dc)
+
+---
+
+### Wireframes
+
+The wireframes were created to plan the user experience and layout before development began.
+
+👉 **View Wireframes (Figma)**
+[https://www.figma.com/board/VbOPFsR5xK0yImCndojPhR/ClientLock?node-id=0-1&p=f&t=fd2kE5MajBZUnNYj-0](https://www.figma.com/board/VbOPFsR5xK0yImCndojPhR/ClientLock?node-id=0-1&p=f&t=fd2kE5MajBZUnNYj-0)
+
+---
+
+## 📖 User Stories
+
+User stories guided development and ensured the application met real‑world needs.
+
+👉 **Read User Stories**
+[https://docs.google.com/document/d/18P0pgyvijbFktxnvKctjLF7NWRjAtqEApqTwAbtGySQ/edit](https://docs.google.com/document/d/18P0pgyvijbFktxnvKctjLF7NWRjAtqEApqTwAbtGySQ/edit)
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+* React
+* React Router
+* Reactstrap / Bootstrap
+
+### Backend
+
+* ASP.NET Core Web API
+* Entity Framework Core
+* PostgreSQL
+
+### Tools
+
+* Swagger (API documentation)
+* Git & GitHub
+* Figma
+* dbdiagram.io
