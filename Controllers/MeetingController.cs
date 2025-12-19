@@ -20,28 +20,87 @@ public class MeetingController : ControllerBase
         _dbContext = context;
     }
 
-  [HttpPost]
-  [Authorize]
-    public IActionResult Create(Meeting meetingToCreate)
+    [HttpPost]
+    [Authorize]
+    public IActionResult Create([FromBody] MeetingCreateDTO newMeeting)
     {
+        var meetingToCreate = new Meeting
+        {
+            MeetingTime = newMeeting.MeetingTime,
+            AgentId = newMeeting.AgentId,
+            ClientId = newMeeting.ClientId,
+            LawPracticeId = newMeeting.LawPracticeId,
+            ConsultingOn = newMeeting.ConsultingOn
+        };
+
         _dbContext.Meetings.Add(meetingToCreate);
         _dbContext.SaveChanges();
+
+            var createdMeeting = _dbContext.Meetings
+            .Include(m => m.Agent)
+            .Include(m => m.Client)
+            .Include(m => m.LawPractice)
+            .FirstOrDefault(m => m.Id == meetingToCreate.Id);
+
         return Created($"api/meeting/{meetingToCreate.Id}", meetingToCreate);
     }
 
-    [HttpGet("{clientId}")]
+
+    [HttpGet("client/{clientId}")]
     [Authorize]
     public IActionResult GetByClientId(int clientId)
     {
         return Ok(_dbContext.Meetings
         .Where(m => m.ClientId == clientId)
         .Include(m => m.Agent)
+        .Include(m => m.Client)
         .Include(m => m.LawPractice)
         .Select(m => new MeetingDTO
         {
             Id = m.Id,
             MeetingTime = m.MeetingTime,
             ConsultingOn = m.ConsultingOn,
+            Agent = new AgentDTO
+            {
+                Id = m.Agent.Id,
+                FirstName = m.Agent.FirstName,
+                LastName = m.Agent.LastName
+            },
+            Client = new ClientDTO
+            {
+                Id = m.Client.Id,
+                FirstName = m.Client.FirstName,
+                LastName = m.Client.LastName
+            },
+            LawPractice = new LawPracticeDTO
+            {
+                Id = m.LawPractice.Id,
+                Type = m.LawPractice.Type
+            }
+
+        }).ToList());
+    }
+
+    [HttpGet("agent/{agentId}")]
+    [Authorize]
+    public IActionResult GetByAgentId(int agentId)
+    {
+        return Ok(_dbContext.Meetings
+        .Where(m => m.AgentId == agentId)
+        .Include(m => m.Agent)
+        .Include(m => m.Client)
+        .Include(m => m.LawPractice)
+        .Select(m => new MeetingDTO
+        {
+            Id = m.Id,
+            MeetingTime = m.MeetingTime,
+            ConsultingOn = m.ConsultingOn,
+            Client = new ClientDTO
+            {
+                Id = m.Client.Id,
+                FirstName = m.Client.FirstName,
+                LastName = m.Client.LastName
+            },
             Agent = new AgentDTO
             {
                 Id = m.Agent.Id,
@@ -55,7 +114,6 @@ public class MeetingController : ControllerBase
             }
 
         }).ToList());
-
     }
 
     [HttpDelete("{id}")]
@@ -67,6 +125,7 @@ public class MeetingController : ControllerBase
         {
             return NotFound();
         }
+        _dbContext.Meetings.Remove(meetingToDelete);
         _dbContext.SaveChanges();
         return NoContent();
     }

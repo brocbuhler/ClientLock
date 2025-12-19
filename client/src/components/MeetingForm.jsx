@@ -1,35 +1,56 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createMeeting } from '../managers/meetingManager'
 import { useNavigate } from 'react-router-dom';
 import { Button, ListGroupItem } from 'reactstrap';
 import { tryGetLoggedInUser } from '../managers/authManager';
+import { getAgentLawPractices } from '../managers/lawPracticeManager';
 
 export default function MeetingForm({ meetingAgent }) {
   const [meetingTime, setMeetingTime] = useState("");
   const [consultingOn, setConsultingOn] = useState("");
+  const [lawPracticeList, setLawPracticeList] = useState([]);
+  const [lawPracticeDropDownId, setLawPracticeDropDownId] = useState(0);
   const navigate = useNavigate();
 
+  const agentKicker = async () => {
+    const user = await tryGetLoggedInUser();
+    if (user.agentId !== null)
+    {
+      navigate("/");
+    }
+  }
+  
   const submitHandler = async (e) => {
     e.preventDefault();
 
     if (!meetingAgent) {
-    console.warn("No agent selected");
-    navigate("/");
-    return;
-  }
+      console.warn("No agent selected");
+      navigate("/");
+      return;
+    }
+
+    if (!lawPracticeDropDownId) {
+      alert("Please select a law practice");
+      return;
+    }
 
     const user = await tryGetLoggedInUser();
     const meetingToSchedule = {
-      meetingTime,
-      consultingOn,
+      meetingTime: meetingTime,
+      consultingOn: consultingOn,
       agentId: meetingAgent.id,
-      clientId: user?.id,
-      lawPracticeId: meetingAgent.lawPracticeId
+      clientId: user?.clientId,
+      lawPracticeId: lawPracticeDropDownId
     };
-    createMeeting(meetingToSchedule).then(() => {
-      navigate("/");
-    });
-  }
+    createMeeting(meetingToSchedule);
+    navigate("/meeting");
+  };
+
+
+    useEffect(() => {
+      agentKicker();
+      getAgentLawPractices(meetingAgent.id).then(setLawPracticeList);
+    }, [meetingAgent]);
 
   return (
     <>
@@ -61,7 +82,21 @@ export default function MeetingForm({ meetingAgent }) {
             value={consultingOn}
             onChange={(e) => setConsultingOn(e.target.value)}
           />
-          <Button color="success" onClick={submitHandler}>Submit</Button>
+          <div style={{ marginBottom: "1rem" }}>
+            <select
+              className="form-select"
+              defaultValue=""
+              onChange={(e) => setLawPracticeDropDownId(Number(e.target.value))}
+            >
+              <option value="">Law Options</option>
+              {lawPracticeList.map((l) => (
+                <option key={l.id} value={l.lawPractice.id}>
+                  {l.lawPractice.type}
+                </option>
+              ))}
+            </select>
+          </div>
+          <Button color="success" type="button" onClick={submitHandler}>Submit</Button>
         </ListGroupItem>
         </>
   )

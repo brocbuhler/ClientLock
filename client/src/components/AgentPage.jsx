@@ -3,13 +3,24 @@ import { Badge, Button, Card, CardBody, ListGroupItem } from "reactstrap";
 import { getAgents } from "../managers/agentManager";
 import { getLawPracticeAgents, getLawPractices } from "../managers/lawPracticeManager";
 import { useNavigate } from "react-router-dom";
+import { tryGetLoggedInUser } from "../managers/authManager";
 
 export default function Agents({ filteredAgents, setMeetingAgent }) {
   const [agents, setAgents] = useState([]);
   const [laws, setLaws] = useState([]);
   const [dropDownAgents, setDropDownAgents] = useState([]);
+  const [clientMode, setClientMode] = useState(false)
   const navigate = useNavigate();
 
+  const clientToggle = async () => {
+    const user = await tryGetLoggedInUser()
+    if (user.clientId == null)
+    {
+      setClientMode(false)
+    } else {
+      setClientMode(true)
+    }
+  };
 
   const meetingHandler = (agent) => {
     setMeetingAgent(agent);
@@ -28,6 +39,7 @@ export default function Agents({ filteredAgents, setMeetingAgent }) {
   }
   
   useEffect(() => {
+    clientToggle();
     getLawPractices().then(setLaws);
     if (filteredAgents) {
       setAgents(filteredAgents)
@@ -110,18 +122,14 @@ export default function Agents({ filteredAgents, setMeetingAgent }) {
               ))}
               </div>
             </div>
-            <Button
-              color="danger"
-              size="sm"
-              onClick={() => meetingHandler(c)}
-            >
+            {clientMode && (
+            <Button color="danger" size="sm" onClick={() => meetingHandler(c)}>
               Schedule A Meeting!
             </Button>
+          )}
           </ListGroupItem>
         ))}
       </CardBody>
     </Card>
   );
 }
-
-//next steps: 3. make a drop down filter for agents 4. do needed set up for schedule a meeting button.

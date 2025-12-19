@@ -1,12 +1,23 @@
 import { useState, useEffect } from "react";
 import { Button, Card, CardBody, ListGroup, ListGroupItem } from "reactstrap";
 import { tryGetLoggedInUser } from "../managers/authManager";
-import { deleteMeeting, getMeetingsByClient, updateMeeting } from "../managers/meetingManager";
+import { deleteMeeting, getMeetingsByAgent, getMeetingsByClient, updateMeeting } from "../managers/meetingManager";
 
 export default function Meetings() {
   const [editingMeetingId, setEditingMeetingId] = useState(null);
   const [meetings, setMeetings] = useState([]);
+  const [clientMode, setClientMode] = useState(false)
   const [updateAMeeting, setUpdateAMeeting] = useState("");
+
+  const clientToggle = async () => {
+    const user = await tryGetLoggedInUser()
+    if (user.clientId == null)
+    {
+      setClientMode(false)
+    } else {
+      setClientMode(true)
+    }
+  };
 
   const deleteHandler = (meetingId) => {
     deleteMeeting(meetingId).then(() => {
@@ -25,10 +36,15 @@ export default function Meetings() {
   
   const getYourMeetings = async () => {
     const user = await tryGetLoggedInUser();
-    getMeetingsByClient(user.clientId).then(setMeetings);
+    if (user.clientId !== null)  {
+      getMeetingsByClient(user.clientId).then(setMeetings);
+    } else if (user.agentId !== null){
+      getMeetingsByAgent(user.agentId).then(setMeetings);
+    }
   }
 
   useEffect(() => {
+    clientToggle();
     getYourMeetings();
   }, []);
 
@@ -75,7 +91,7 @@ export default function Meetings() {
             <strong>WHEN:</strong> {c.meetingTime}
           </div>
           <div style={{ flex: "1 1 50%" }}>
-            <strong>WITH:</strong> {c.agent.firstName} {c.agent.lastName}
+            <strong>WITH:</strong> Agent {c.agent.firstName} {c.agent.lastName} & Client {c.client.firstName} {c.client.lastName}
           </div>
           <div style={{ flex: "1 1 50%" }}>
             <strong>LAW:</strong> {c.lawPractice.type}
@@ -85,48 +101,49 @@ export default function Meetings() {
           </div>
 
           <div style={{ display: "flex", gap: "6px", marginTop: "6px" }}>
-            {editingMeetingId === c.id ? (
-              <>
-                <input
-                  type="datetime-local"
-                  value={updateAMeeting}
-                  onChange={(e) => setUpdateAMeeting(e.target.value)}
-                  style={{ height: "30px", borderRadius: "6px", padding: "2px 6px" }}
-                />
-                <Button
-                  color="success"
-                  size="sm"
-                  onClick={() => updateHander(c.id)}
-                  style={{ borderRadius: "6px" }}
-                >
-                  Submit
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button
-                  color="primary"
-                  size="sm"
-                  onClick={() => {
-                    setEditingMeetingId(c.id);
-                    // convert to proper datetime-local format if needed
-                    const dt = new Date(c.meetingTime);
-                    const formatted = dt.toISOString().slice(0, 16);
-                    setUpdateAMeeting(formatted);
-                  }}
-                  style={{ borderRadius: "6px" }}
-                >
-                  Update
-                </Button>
-                <Button
-                  color="danger"
-                  size="sm"
-                  onClick={() => deleteHandler(c.id)}
-                  style={{ borderRadius: "6px" }}
-                >
-                  Delete
-                </Button>
-              </>
+            {clientMode == false && (
+              editingMeetingId === c.id ? (
+                <>
+                  <input
+                    type="datetime-local"
+                    value={updateAMeeting}
+                    onChange={(e) => setUpdateAMeeting(e.target.value)}
+                    style={{ height: "30px", borderRadius: "6px", padding: "2px 6px" }}
+                  />
+                  <Button
+                    color="success"
+                    size="sm"
+                    onClick={() => updateHander(c.id)}
+                    style={{ borderRadius: "6px" }}
+                  >
+                    Submit
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    color="primary"
+                    size="sm"
+                    onClick={() => {
+                      setEditingMeetingId(c.id);
+                      const dt = new Date(c.meetingTime);
+                      const formatted = dt.toISOString().slice(0, 16);
+                      setUpdateAMeeting(formatted);
+                    }}
+                    style={{ borderRadius: "6px" }}
+                  >
+                    Update
+                  </Button>
+                  <Button
+                    color="danger"
+                    size="sm"
+                    onClick={() => deleteHandler(c.id)}
+                    style={{ borderRadius: "6px" }}
+                  >
+                    Delete
+                  </Button>
+                </>
+              )
             )}
           </div>
         </ListGroupItem>
