@@ -1,9 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 namespace ClientLock.models.DTO;
-public class MeetingUpdateDTO
+public class MeetingTimeUpdateDTO
 {
     public DateTime MeetingTime { get; set; }
-    public int LawPracticeId { get; set; }
-    public string ConsultingOn { get; set; }
 }
 

@@ -28,10 +28,18 @@ export const deleteMeeting = (id) => {
   return fetch(`${_apiUrl}/${id}`, {method: "DELETE" });
 };
 
-export const updateMeeting = (id, meeting) => {
+export const updateMeetingTime = (id, meeting) => {
   return fetch(`${_apiUrl}/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ meetingTime: meeting.meetingTime }),
+  });
+};
+
+export const updateMeeting = (id, update) => {
+  return fetch(`${_apiUrl}/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(update),
   });
 };

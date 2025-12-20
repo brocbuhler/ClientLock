@@ -132,16 +132,30 @@ public class MeetingController : ControllerBase
 
     [HttpPatch("{id}")]
     [Authorize]
-    public IActionResult Update(int id, [FromBody] MeetingUpdateDTO update)
+    public IActionResult UpdateTime(int id, [FromBody] MeetingTimeUpdateDTO Update)
     {
         var meetingToUpdate = _dbContext.Meetings.FirstOrDefault(c => c.Id == id);
-        if (meetingToUpdate == null) return NotFound();
-
-        if (update.MeetingTime != null)
-            meetingToUpdate.MeetingTime = update.MeetingTime;
-
+        if (meetingToUpdate == null)
+        {
+            return NotFound();
+        }
+        meetingToUpdate.MeetingTime = Update.MeetingTime;
         _dbContext.SaveChanges();
         return NoContent();
     }
-
+    [HttpPut("{id}")]
+    [Authorize]
+    public IActionResult Update(int id, [FromBody] MeetingUpdateDTO Update)
+    {
+        Meeting meetingToUpdate = _dbContext.Meetings.FirstOrDefault(c => c.Id == id);
+        if (meetingToUpdate == null )
+        {
+            return NotFound();
+        }
+        meetingToUpdate.MeetingTime = Update.MeetingTime;
+        meetingToUpdate.ConsultingOn = Update.ConsultingOn;
+        meetingToUpdate.LawPracticeId = Update.LawPracticeId;
+        _dbContext.SaveChanges();
+        return NoContent();
+    }
 }
